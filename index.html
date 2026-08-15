@@ -10,15 +10,17 @@
         header h1 { margin: 0; font-size: 22px; }
         header p { margin: 5px 0 0; font-size: 13px; }
         .container { padding: 12px; max-width: 500px; margin: 0 auto; }
-        .item { background: white; padding: 12px 15px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        .item { background: white; padding: 10px 15px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+        .item-left { display: flex; align-items: center; gap: 12px; }
+        .item-img { width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 1px solid #eee; }
         .item-info h3 { margin: 0 0 4px; font-size: 16px; color: #333; }
-        .item-info p { margin: 0; color: #666; font-size: 14px; }
+        .item-info p { margin: 0; color: #666; font-size: 13px; font-weight: bold; }
         .btn-box { display: flex; align-items: center; }
-        .btn { background: #2e7d32; color: white; border: none; width: 30px; height: 30px; border-radius: 4px; font-size: 18px; font-weight: bold; cursor: pointer; }
-        .qty { margin: 0 10px; font-weight: bold; font-size: 16px; }
+        .btn { background: #2e7d32; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .qty { margin: 0 10px; font-weight: bold; font-size: 16px; min-width: 15px; text-align: center; }
         .footer { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #ddd; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
         .footer-text { font-size: 15px; font-weight: bold; color: #333; }
-        .order-btn { background: #25D366; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; font-size: 15px; text-decoration: none; cursor: pointer; }
+        .order-btn { background: #25D366; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; font-size: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -34,6 +36,89 @@
         <button class="order-btn" onclick="sendOrder()">ઓર્ડર મોકલો 🛒</button>
     </div>
 
+    <script>
+        const products = [
+            { name: "બટાકા (Potato)", price: 30, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=120&q=80" },
+            { name: "ડુંગળી (Onion)", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=120&q=80" },
+            { name: "ટામેટા (Tomato)", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=120&q=80" },
+            { name: "ભીંડા (Lady Finger)", price: 60, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1628773822503-930a8586f34b?w=120&q=80" },
+            { name: "રીંગણ (Brinjal)", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=120&q=80" },
+            { name: "દૂધી (Bottle Gourd)", price: 30, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=120&q=80" },
+            { name: "કાકડી (Cucumber)", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=120&q=80" },
+            { name: "કોબીજ (Cabbage)", price: 30, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=120&q=80" },
+            { name: "ફ્લાવર (Cauliflower)", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=120&q=80" },
+            { name: "ગાજર (Carrot)", price: 50, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=120&q=80" },
+            { name: "બીટ (Beetroot)", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1528825871115-3581a5387919?w=120&q=80" },
+            { name: "વટાણા (Green Peas)", price: 60, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=120&q=80" },
+            { name: "આદુ (Ginger)", price: 30, unit: "250 ગ્રામ", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=120&q=80" },
+            { name: "લીલા મરચાં (Green Chilli)", price: 20, unit: "250 ગ્રામ", img: "https://images.unsplash.com/photo-1588870995846-f4ffbc3d4f52?w=120&q=80" },
+            { name: "લીંબુ (Lemon)", price: 30, unit: "250 ગ્રામ", img: "https://images.unsplash.com/photo-1534531141161-e402157a41d7?w=120&q=80" },
+            { name: "પાલક (Spinach)", price: 20, unit: "1 જોડી", img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=120&q=80" }
+        ];
+        let cart = {};
+
+        function render() {
+            const container = document.getElementById('items');
+            container.innerHTML = '';
+            products.forEach((p, index) => {
+                const qty = cart[index] || 0;
+                container.innerHTML += `
+                    <div class="item">
+                        <div class="item-left">
+                            <img src="${p.img}" alt="${p.name}" class="item-img">
+                            <div class="item-info">
+                                <h3>${p.name}</h3>
+                                <p>₹${p.price} / ${p.unit}</p>
+                            </div>
+                        </div>
+                        <div class="btn-box">
+                            <button class="btn" onclick="update(${index}, -1)">-</button>
+                            <span class="qty">${qty}</span>
+                            <button class="btn" onclick="update(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            updateFooter();
+        }
+
+        function update(index, change) {
+            cart[index] = (cart[index] || 0) + change;
+            if (cart[index] < 0) cart[index] = 0;
+            render();
+        }
+
+        function updateFooter() {
+            let total = 0, count = 0;
+            products.forEach((p, index) => {
+                if (cart[index]) {
+                    count += cart[index];
+                    total += cart[index] * p.price;
+                }
+            });
+            document.getElementById('count').innerText = count + " વસ્તુઓ";
+            document.getElementById('total').innerText = total;
+        }
+
+        function sendOrder() {
+            let text = "નમસ્તે, મારે આ શાકભાજી ઓર્ડર કરવા છે:%0A%0A";
+            let hasItem = false;
+            products.forEach((p, index) => {
+                if (cart[index] > 0) {
+                    text += `• ${p.name}: ${cart[index]} (${p.unit})%0A`;
+                    hasItem = true;
+                }
+            });
+            if (!hasItem) { alert("મહેરબાની કરીને ઓર્ડર માટે શાકભાજી પસંદ કરો!"); return; }
+            
+            // તમારો WhatsApp નંબર (આગળ 91 રાખવું)
+            const phone = "919428707543"; 
+            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+        }
+        render();
+    </script>
+</body>
+</html>
     <script>
         const products = [
             { name: "બટાકા (Potato)", price: 30, unit: "1 કિલો" },
