@@ -1,61 +1,121 @@
 <!DOCTYPE html>
 <html lang="gu">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>તાજી સબ્જી - Fresh Vegetables Market</title>
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background-color: #f5f7fa; padding-bottom: 90px; }
-header { background: #1b5e20; color: white; text-align: center; padding: 20px 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-header h1 { font-size: 24px; margin-bottom: 5px; }
-header p { font-size: 14px; opacity: 0.9; }
-
-.container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-
-.card { background: white; border-radius: 12px; padding: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e0e0e0; position: relative; }
-.card .icon { font-size: 40px; margin-bottom: 8px; }
-.card h3 { font-size: 16px; color: #2c3e50; margin-bottom: 4px; }
-.card .price { color: #2e7d32; font-weight: bold; font-size: 14px; margin-bottom: 10px; }
-
-.qty-select { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 8px; font-size: 13px; }
-.add-btn { background: #2e7d32; color: white; border: none; width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-.add-btn:active { transform: scale(0.98); }
-
-/* Floating Cart Bar */
-.cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; box-shadow: 0 -4px 12px rgba(0,0,0,0.15); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #2e7d32; }
-.cart-info { font-size: 15px; font-weight: bold; color: #333; }
-.order-btn { background: #25d366; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; font-size: 15px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-
-/* User Info Form Popup */
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 100; }
-.modal-content { background: white; padding: 20px; border-radius: 12px; width: 90%; max-width: 400px; }
-.modal-content h2 { margin-bottom: 15px; color: #2e7d32; font-size: 18px; }
-.modal-content input, .modal-content textarea { width: 100%; padding: 10px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-.modal-btns { display: flex; gap: 10px; }
-.send-btn { background: #25d366; color: white; border: none; padding: 10px; border-radius: 6px; flex: 1; font-weight: bold; cursor: pointer; }
-.close-btn { background: #e74c3c; color: white; border: none; padding: 10px; border-radius: 6px; flex: 1; font-weight: bold; cursor: pointer; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>તાજા શાકભાજી માર્કેટ</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; padding-bottom: 80px; }
+        header { background: #1b5e20; color: white; text-align: center; padding: 15px; }
+        header h1 { margin: 0; font-size: 22px; }
+        header p { margin: 5px 0 0; font-size: 13px; }
+        .container { padding: 12px; max-width: 500px; margin: 0 auto; }
+        .item { background: white; padding: 12px 15px; margin-bottom: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        .item-info h3 { margin: 0 0 4px; font-size: 16px; color: #333; }
+        .item-info p { margin: 0; color: #666; font-size: 14px; }
+        .btn-box { display: flex; align-items: center; }
+        .btn { background: #2e7d32; color: white; border: none; width: 30px; height: 30px; border-radius: 4px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .qty { margin: 0 10px; font-weight: bold; font-size: 16px; }
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 1px solid #ddd; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); }
+        .footer-text { font-size: 15px; font-weight: bold; color: #333; }
+        .order-btn { background: #25D366; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; font-size: 15px; text-decoration: none; cursor: pointer; }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>🥦 તાજા શાકભાજી માર્કેટ</h1>
+        <p>રોજિંદા તાજા શાકભાજી ઘરે બેઠા ઓર્ડર કરો</p>
+    </header>
 
-<header>
-<h1>🥦 તાજા શાકભાજી માર્કેટ</h1>
-<p>રોજિંદા તાજા શાકભાજી ઘરે બેઠા ઓર્ડર કરો</p>
-</header>
+    <div class="container" id="items"></div>
 
-<div class="container">
-<div class="grid" id="productGrid"></div>
-</div>
+    <div class="footer">
+        <div class="footer-text">ઓર્ડર: <span id="count">0</span> | કુલ: ₹<span id="total">0</span></div>
+        <button class="order-btn" onclick="sendOrder()">ઓર્ડર મોકલો 🛒</button>
+    </div>
 
-<!-- Floating Bottom Bar -->
-<div class="cart-bar">
-<div class="cart-info">
-ઓર્ડર: <span id="cartCount">0</span> વસ્તુઓ | કુલ: ₹<span id="cartTotal">0</span>
-</div>
-<button class="order-btn" onclick="openCheckout()">
-ઓર્ડર મોકલો 🛒
+    <script>
+        const products = [
+            { name: "બટાકા (Potato)", price: 30, unit: "1 કિલો" },
+            { name: "ડુંગળી (Onion)", price: 40, unit: "1 કિલો" },
+            { name: "ટામેટા (Tomato)", price: 40, unit: "1 કિલો" },
+            { name: "ભીંડા (Lady Finger)", price: 60, unit: "1 કિલો" },
+            { name: "રીંગણ (Brinjal)", price: 40, unit: "1 કિલો" },
+            { name: "દૂધી (Bottle Gourd)", price: 30, unit: "1 કિલો" },
+            { name: "કાકડી (Cucumber)", price: 40, unit: "1 કિલો" },
+            { name: "કોબીજ (Cabbage)", price: 30, unit: "1 કિલો" },
+            { name: "ફ્લાવર (Cauliflower)", price: 40, unit: "1 કિલો" },
+            { name: "ગાજર (Carrot)", price: 50, unit: "1 કિલો" },
+            { name: "બીટ (Beetroot)", price: 40, unit: "1 કિલો" },
+            { name: "ગુવાર (Cluster Beans)", price: 60, unit: "1 કિલો" },
+            { name: "વટાણા (Green Peas)", price: 60, unit: "1 કિલો" },
+            { name: "આદુ (Ginger)", price: 30, unit: "250 ગ્રામ" },
+            { name: "લીલા મરચાં (Green Chilli)", price: 20, unit: "250 ગ્રામ" },
+            { name: "લીંબુ (Lemon)", price: 30, unit: "250 ગ્રામ" },
+            { name: "કોથમરી (Coriander)", price: 20, unit: "250 ગ્રામ" },
+            { name: "પાલક (Spinach)", price: 20, unit: "1 જોડી" },
+            { name: "મેથી (Fenugreek Leaves)", price: 20, unit: "1 જોડી" }
+        ];
+        let cart = {};
+
+        function render() {
+            const container = document.getElementById('items');
+            container.innerHTML = '';
+            products.forEach((p, index) => {
+                const qty = cart[index] || 0;
+                container.innerHTML += `
+                    <div class="item">
+                        <div class="item-info">
+                            <h3>${p.name}</h3>
+                            <p>₹${p.price} / ${p.unit}</p>
+                        </div>
+                        <div class="btn-box">
+                            <button class="btn" onclick="update(${index}, -1)">-</button>
+                            <span class="qty">${qty}</span>
+                            <button class="btn" onclick="update(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            updateFooter();
+        }
+
+        function update(index, change) {
+            cart[index] = (cart[index] || 0) + change;
+            if (cart[index] < 0) cart[index] = 0;
+            render();
+        }
+
+        function updateFooter() {
+            let total = 0, count = 0;
+            products.forEach((p, index) => {
+                if (cart[index]) {
+                    count += cart[index];
+                    total += cart[index] * p.price;
+                }
+            });
+            document.getElementById('count').innerText = count + " વસ્તુઓ";
+            document.getElementById('total').innerText = total;
+        }
+
+        function sendOrder() {
+            let text = "નમસ્તે, મારે આ શાકભાજી ઓર્ડર કરવા છે:%0A%0A";
+            let hasItem = false;
+            products.forEach((p, index) => {
+                if (cart[index] > 0) {
+                    text += `• ${p.name}: ${cart[index]} (${p.unit})%0A`;
+                    hasItem = true;
+                }
+            });
+            if (!hasItem) { alert("મહેરબાની કરીને ઓર્ડર માટે શાકભાજી પસંદ કરો!"); return; }
+            
+            const phone = "919428707543"; 
+            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+        }
+        render();
+    </script>
+</body>
+</html>
 </button>
 </div>
 
