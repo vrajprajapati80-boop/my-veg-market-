@@ -6,28 +6,30 @@
     <title>તાજી માર્કેટ</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f4f7f4; padding-bottom: 90px; }
-        header { background: #1b5e20; color: white; text-align: center; padding: 15px 10px 10px 10px; position: sticky; top: 0; z-index: 100; }
+        header { background: #1b5e20; color: white; text-align: center; padding: 15px 10px 10px 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
         header h1 { margin: 0 0 10px 0; font-size: 20px; }
-        .search-box { width: 92%; max-width: 460px; padding: 10px 14px; border-radius: 20px; border: none; font-size: 14px; outline: none; }
+        .search-box { width: 92%; max-width: 460px; padding: 10px 14px; border-radius: 20px; border: none; font-size: 14px; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .container { padding: 12px; max-width: 500px; margin: 0 auto; }
         .section-title { font-size: 18px; color: #1b5e20; margin: 20px 0 10px 0; font-weight: bold; border-bottom: 2.5px solid #2e7d32; padding-bottom: 4px; }
-        .item { background: white; padding: 10px 12px; margin-bottom: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e8eee8; }
+        .item { background: white; padding: 10px 12px; margin-bottom: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(0,0,0,0.05); border: 1px solid #e8eee8; }
         .item-left { display: flex; align-items: center; gap: 12px; }
-        .item-img { width: 55px; height: 55px; object-fit: cover; border-radius: 10px; background: #e8f5e9; }
+        .item-img { width: 55px; height: 55px; object-fit: cover; border-radius: 10px; background: #e8f5e9; border: 1px solid #c8e6c9; }
         .item-info h3 { margin: 0; font-size: 15px; color: #222; }
         .item-info p { margin: 3px 0 0; font-size: 13px; color: #666; font-weight: 500; }
         .btn-box { display: flex; align-items: center; background: #f0f7f0; border-radius: 8px; padding: 2px; }
-        .btn { background: #2e7d32; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .btn { background: #2e7d32; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn:active { background: #1b5e20; }
         .qty { margin: 0 10px; font-weight: bold; font-size: 15px; color: #1b5e20; min-width: 18px; text-align: center; }
-        .footer { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: white; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #25D366; }
+        .footer { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: white; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; border-top: 2px solid #25D366; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); }
         .total-box { font-size: 17px; color: #1b5e20; }
-        .order-btn { background: #25D366; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; }
+        .order-btn { background: #25D366; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 3px 6px rgba(37,211,102,0.3); }
+        .order-btn:active { background: #1eb954; }
     </style>
 </head>
 <body>
     <header>
         <h1>🥦 તાજી માર્કેટ 🍎</h1>
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 શોધો..." onkeyup="render()">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 શાકભાજી કે ફળ શોધો..." onkeyup="filterItems()">
     </header>
     
     <div class="container" id="items"></div>
@@ -38,26 +40,68 @@
     </div>
 
     <script>
-        // અહીં GitHub પર અપલોડ કરેલી ફાઇલના નામ જ લખેલા છે
+        const fallbackImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23e8f5e9'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-size='40'>🥗</text></svg>";
+
         const products = [
-            { name: "🥦 મુખ્ય શાકભાજી", price: 0, unit: "", img: "" },
-            { name: "બટાકા", price: 30, unit: "1 કિલો", img: "bataka.jpg" },
-            { name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "dungri.jpg" },
-            { name: "ટામેટા", price: 40, unit: "1 કિલો", img: "tameta.jpg" },
-            { name: "રીંગણ", price: 40, unit: "1 કિલો", img: "ringan.jpg" },
-            { name: "ભીંડા", price: 60, unit: "1 કિલો", img: "bhinda.jpg" },
-            { name: "દૂધી", price: 30, unit: "1 કિલો", img: "dudhi.jpg" },
-            { name: "કાકડી", price: 40, unit: "1 કિલો", img: "kakdi.jpg" },
-            { name: "કોબીજ", price: 30, unit: "1 કિલો", img: "kobij.jpg" },
-            { name: "ફ્લાવર", price: 40, unit: "1 કિલો", img: "flower.jpg" },
-            
-            { name: "🍎 તાજા ફળો", price: 0, unit: "", img: "" },
-            { name: "કેળા", price: 50, unit: "1 ડઝન", img: "kela.jpg" },
-            { name: "સફરજન", price: 150, unit: "1 કિલો", img: "safarjan.jpg" },
-            { name: "નારંગી", price: 80, unit: "1 કિલો", img: "narangi.jpg" },
-            { name: "અનાનસ", price: 70, unit: "1 નંગ", img: "ananasa.jpg" },
-            { name: "નાળિયેર", price: 40, unit: "1 નંગ", img: "naliyer.jpg" },
-            { name: "જામફળ", price: 60, unit: "1 કિલો", img: "jamfal.jpg" }
+            // --- નિત્ય ઉપયોગી શાકભાજી ---
+            { name: "🥦 મુખ્ય શાકભાજી (Daily Veggies)", price: 0, unit: "", img: "" },
+            { name: "બટાકા", price: 30, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/320px-Patates.jpg" },
+            { name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Onion_on_White.JPG/320px-Onion_on_White.JPG" },
+            { name: "ટામેટા", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/320px-Tomato_je.jpg" },
+            { name: "રીંગણ (Brinjal)", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Eggplant_single.jpg/320px-Eggplant_single.jpg" },
+            { name: "ભીંડા", price: 60, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Okra_aka_Ladyfinger.jpg/320px-Okra_aka_Ladyfinger.jpg" },
+            { name: "દૂધી", price: 30, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Calabash.jpg/320px-Calabash.jpg" },
+            { name: "કાકડી", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Cucumis_sativus_fruit.jpg/320px-Cucumis_sativus_fruit.jpg" },
+            { name: "કોબીજ", price: 30, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Cabbage_and_cross_section_on_white.jpg/320px-Cabbage_and_cross_section_on_white.jpg" },
+            { name: "ફ્લાવર", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Cauliflower.jpg/320px-Cauliflower.jpg" },
+            { name: "ગાજર", price: 50, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Carrots-Market-1.jpg/320px-Carrots-Market-1.jpg" },
+            { name: "બીટ", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Beetroot_on_white.jpg/320px-Beetroot_on_white.jpg" },
+            { name: "લીલા વટાણા", price: 80, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Peas_in_pod_-_Studio.jpg/320px-Peas_in_pod_-_Studio.jpg" },
+            { name: "કેપ્સિકમ (લીલા)", price: 80, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Green_Bell_Pepper.jpg/320px-Green_Bell_Pepper.jpg" },
+            { name: "લાલ-પીળા કેપ્સિકમ", price: 160, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Yellow_and_red_bell_peppers.jpg/320px-Yellow_and_red_bell_peppers.jpg" },
+
+            // --- લીલા મસાલા અને ભાજી ---
+            { name: "🌿 લીલા મસાલા અને ભાજી (Greens)", price: 0, unit: "", img: "" },
+            { name: "આદુ", price: 100, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Ginger_root.jpg/320px-Ginger_root.jpg" },
+            { name: "લીલા મરચાં", price: 80, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Green_chili_peppers.jpg/320px-Green_chili_peppers.jpg" },
+            { name: "લીંબુ", price: 100, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Lemon.jpg/320px-Lemon.jpg" },
+            { name: "લસણ", price: 160, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Garlic_clove_and_bulb.jpg/320px-Garlic_clove_and_bulb.jpg" },
+            { name: "પાલક", price: 20, unit: "1 જોડી", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Spinach_leaves.jpg/320px-Spinach_leaves.jpg" },
+            { name: "કોથમીર", price: 20, unit: "1 જોડી", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Coriander_leaves.jpg/320px-Coriander_leaves.jpg" },
+            { name: "ફુદીનો", price: 10, unit: "1 જોડી", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Mint-leaves-2007.jpg/320px-Mint-leaves-2007.jpg" },
+
+            // --- અન્ય શાકભાજી ---
+            { name: "🥕 અન્ય શાકભાજી (Other Veggies)", price: 0, unit: "", img: "" },
+            { name: "કારેલા", price: 50, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Bittergourd.jpg/320px-Bittergourd.jpg" },
+            { name: "મકાઈ", price: 20, unit: "1 નંગ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Corn_on_the_cob.jpg/320px-Corn_on_the_cob.jpg" },
+            { name: "મૂળા", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Radish_cultivars.jpg/320px-Radish_cultivars.jpg" },
+            { name: "શક્કરિયા", price: 60, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/SweetPotato.jpg/320px-SweetPotato.jpg" },
+            { name: "કોળું (Pumpkin)", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Great_Pumpkin.jpg/320px-Great_Pumpkin.jpg" },
+            { name: "મશરૂમ (Mushroom)", price: 50, unit: "1 પેકેટ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Champignon_Button_Mushroom.jpg/320px-Champignon_Button_Mushroom.jpg" },
+            { name: "બ્રોકોલી", price: 100, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Broccoli_and_cross_section_cross_cut.jpg/320px-Broccoli_and_cross_section_cross_cut.jpg" },
+
+            // --- તાજા અને મોસમી ફળો ---
+            { name: "🍎 તાજા ફળો (Fresh Fruits)", price: 0, unit: "", img: "" },
+            { name: "કેળા", price: 50, unit: "1 ડઝન", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/320px-Banana-Single.jpg" },
+            { name: "સફરજન", price: 150, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/320px-Red_Apple.jpg" },
+            { name: "કેરી", price: 150, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mango_Alphonso.jpg/320px-Mango_Alphonso.jpg" },
+            { name: "દાડમ", price: 120, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Pomegranate02_edit.jpg/320px-Pomegranate02_edit.jpg" },
+            { name: "તરબૂચ", price: 60, unit: "1 નંગ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Watermelon-stills.jpg/320px-Watermelon-stills.jpg" },
+            { name: "ટેટી", price: 50, unit: "1 નંગ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Cantaloupe_and_cross_section.jpg/320px-Cantaloupe_and_cross_section.jpg" },
+            { name: "પપૈયું", price: 50, unit: "1 નંગ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Papaya_cross_section_with_seeds.jpg/320px-Papaya_cross_section_with_seeds.jpg" },
+            { name: "જામફળ", price: 60, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Psidium_guajava_fruit_cross_section.jpg/320px-Psidium_guajava_fruit_cross_section.jpg" },
+            { name: "દ્રાક્ષ", price: 100, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Table_grapes_on_white.jpg/320px-Table_grapes_on_white.jpg" },
+            { name: "નારંગી", price: 80, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Orange-Fruit-Pieces.jpg/320px-Orange-Fruit-Pieces.jpg" },
+            { name: "અનાનસ (Pineapple)", price: 70, unit: "1 નંગ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Pineapple_and_cross_section.jpg/320px-Pineapple_and_cross_section.jpg" },
+            { name: "નાળિયેર (પાણીનું)", price: 40, unit: "1 નંગ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Coconut_white_bg.jpg/320px-Coconut_white_bg.jpg" },
+
+            // --- એક્ઝોટિક ફળો ---
+            { name: "🥝 એક્ઝોટિક ફળો (Exotic Fruits)", price: 0, unit: "", img: "" },
+            { name: "ડ્રેગન ફ્રૂટ", price: 150, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Pitaya_cross_section_ed2.jpg/320px-Pitaya_cross_section_ed2.jpg" },
+            { name: "કીવી (Kiwi)", price: 30, unit: "1 નંગ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Kiwi_aka.jpg/320px-Kiwi_aka.jpg" },
+            { name: "સ્ટ્રોબેરી", price: 100, unit: "1 પેકેટ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Strawberries.jpg/320px-Strawberries.jpg" },
+            { name: "એવોકાડો", price: 150, unit: "1 નંગ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Avocado_with_cross_section.jpg/320px-Avocado_with_cross_section.jpg" },
+            { name: "બ્લુબેરી", price: 200, unit: "1 પેકેટ", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Blueberries.jpg/320px-Blueberries.jpg" }
         ];
 
         let cart = {};
@@ -69,16 +113,21 @@
 
             products.forEach((p, i) => {
                 if(p.price === 0) {
-                    if(!query) container.innerHTML += `<div class="section-title">${p.name}</div>`;
+                    if(!query) {
+                        container.innerHTML += `<div class="section-title">${p.name}</div>`;
+                    }
                     return;
                 }
-                if(query && !p.name.toLowerCase().includes(query)) return;
+
+                if(query && !p.name.toLowerCase().includes(query)) {
+                    return;
+                }
 
                 const qty = cart[i] || 0;
                 container.innerHTML += `
                     <div class="item">
                         <div class="item-left">
-                            <img src="${p.img}" class="item-img" onerror="this.src='https://via.placeholder.com/100?text=${encodeURIComponent(p.name)}';">
+                            <img src="${p.img}" class="item-img" onerror="this.onerror=null; this.src='${fallbackImg}';">
                             <div class="item-info">
                                 <h3>${p.name}</h3>
                                 <p>₹${p.price} / ${p.unit}</p>
@@ -91,6 +140,7 @@
                         </div>
                     </div>`;
             });
+
             calculateTotal();
         }
 
@@ -105,20 +155,43 @@
             render();
         }
 
+        function filterItems() {
+            render();
+        }
+
         function sendOrder() {
-            let total = 0, itemsList = "", count = 0;
+            let total = 0;
+            let itemsList = "";
+            let count = 0;
+
             products.forEach((p, i) => {
                 if (cart[i] > 0) {
                     count++;
                     let sub = cart[i] * p.price;
-                    itemsList += `${count}. *${p.name}* (${p.unit}) - ${cart[i]} × ₹${p.price} = ₹${sub}\n`;
+                    itemsList += `${count}. *${p.name}* (${p.unit})\n    └ જથ્થો: *${cart[i]}* × ₹${p.price} = *₹${sub}*\n\n`;
                     total += sub;
                 }
             });
-            if(count === 0) return alert("વસ્તુ પસંદ કરો!");
-            
-            let msg = `🛒 *નવો ઓર્ડર*\n\n${itemsList}\n💰 *કુલ: ₹${total}*`;
-            window.open(`https://wa.me/919428707543?text=${encodeURIComponent(msg)}`, '_blank');
+
+            if(count === 0) {
+                alert("કૃપા કરીને ઓર્ડર કરવા માટે ઓછામાં ઓછી એક વસ્તુ પસંદ કરો!");
+                return;
+            }
+
+            let today = new Date();
+            let dateStr = today.toLocaleDateString('gu-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+
+            let msg = `🛒 *નવો ઓર્ડર - તાજી માર્કેટ* 🛒\n`;
+            msg += `📅 *તારીખ:* ${dateStr}\n`;
+            msg += `------------------------------------\n\n`;
+            msg += `📋 *ઓર્ડરની વિગત (${count} આઇટમ):*\n\n${itemsList}`;
+            msg += `------------------------------------\n`;
+            msg += `💰 *કુલ ચૂકવવાપાત્ર રકમ: ₹${total}*\n`;
+            msg += `------------------------------------\n\n`;
+            msg += `🚚 *મહેરબાની કરીને મારો ઓર્ડર કન્ફર્મ કરશો.*`;
+
+            let encodedMsg = encodeURIComponent(msg);
+            window.open(`https://wa.me/919428707543?text=${encodedMsg}`, '_blank');
         }
 
         render();
