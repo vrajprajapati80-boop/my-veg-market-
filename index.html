@@ -5,124 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>તાજી માર્કેટ</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: #f4f7f4; padding-bottom: 180px; }
-        header { background: #1b5e20; color: white; text-align: center; padding: 15px 10px 10px 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-        header h1 { margin: 0 0 10px 0; font-size: 20px; }
-        .search-box { width: 92%; max-width: 460px; padding: 10px 14px; border-radius: 20px; border: none; font-size: 14px; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .container { padding: 12px; max-width: 500px; margin: 0 auto; }
+        body { font-family: sans-serif; margin: 0; background: #f4f7f4; padding-bottom: 50px; }
+        .header { background: #1b5e20; color: white; text-align: center; padding: 15px; }
+        .container { padding: 15px; max-width: 500px; margin: auto; }
+        .step { display: none; }
+        .active { display: block; }
         
-        /* નવા સ્ટાઇલ */
-        .details-section { background: #fff; padding: 15px; margin: 10px; border-radius: 12px; border: 1px solid #dcdcdc; }
-        .details-section h3 { margin: 0 0 10px 0; font-size: 16px; color: #1b5e20; }
-        .input-field { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+        /* કાર્ડ સ્ટાઇલ */
+        .item { background: white; padding: 10px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .btn { background: #2e7d32; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
         
-        .section-title { font-size: 18px; color: #1b5e20; margin: 20px 0 10px 0; font-weight: bold; border-bottom: 2.5px solid #2e7d32; padding-bottom: 4px; }
-        .item { background: white; padding: 10px 12px; margin-bottom: 10px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-        .item-img { width: 55px; height: 55px; object-fit: cover; border-radius: 10px; }
-        .item-info h3 { margin: 0; font-size: 15px; }
-        .item-info p { margin: 3px 0 0; font-size: 13px; color: #666; }
-        .btn-box { display: flex; align-items: center; background: #f0f7f0; border-radius: 8px; padding: 2px; }
-        .btn { background: #2e7d32; color: white; border: none; width: 32px; height: 32px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .qty { margin: 0 10px; font-weight: bold; color: #1b5e20; }
+        /* ઇનપુટ ફિલ્ડ */
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
         
-        .footer { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: white; padding: 15px; box-sizing: border-box; border-top: 2px solid #25D366; box-shadow: 0 -3px 10px rgba(0,0,0,0.1); }
-        .order-btn { background: #25D366; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .footer-btn { background: #25D366; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 16px; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>🥦 તાજી માર્કેટ 🍎</h1>
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 વસ્તુ શોધો..." onkeyup="render()">
-    </header>
-    
-    <div class="container" id="items"></div>
 
-    <!-- ગ્રાહકની વિગત માટેનું નવું સેક્શન -->
-    <div class="details-section">
-        <h3>📍 ગ્રાહકની વિગત:</h3>
-        <input type="text" id="customerName" class="input-field" placeholder="તમારું નામ">
-        <input type="text" id="customerAddress" class="input-field" placeholder="તમારું સરનામું (Address)">
+    <div class="header">
+        <h1>🥦 તાજી માર્કેટ</h1>
     </div>
-    
-    <div class="footer">
-        <div style="margin-bottom: 10px; font-size: 16px;">કુલ: <strong>₹<span id="total">0</span></strong></div>
-        <button class="order-btn" onclick="sendOrder()">ઓર્ડર મોકલો 🛒</button>
+
+    <div class="container">
+        
+        <!-- સ્ટેપ ૧: ખરીદી -->
+        <div id="step1" class="step active">
+            <h3>૧. વસ્તુઓ પસંદ કરો:</h3>
+            <div id="product-list"></div>
+            <button class="footer-btn" onclick="goToStep(2)">આગળ વધો (Details) ➡️</button>
+        </div>
+
+        <!-- સ્ટેપ ૨: વિગત -->
+        <div id="step2" class="step">
+            <h3>૨. તમારી વિગત લખો:</h3>
+            <input type="text" id="custName" placeholder="તમારું નામ">
+            <input type="text" id="custAddress" placeholder="તમારું સરનામું">
+            <button class="footer-btn" onclick="goToStep(3)">ઓર્ડર રીવ્યૂ કરો 📝</button>
+        </div>
+
+        <!-- સ્ટેપ ૩: કન્ફર્મ -->
+        <div id="step3" class="step">
+            <h3>૩. ઓર્ડર કન્ફર્મ કરો:</h3>
+            <div id="orderSummary" style="background: white; padding: 15px; border-radius: 10px;"></div>
+            <button class="footer-btn" onclick="sendWhatsApp()">WhatsApp પર ઓર્ડર મોકલો 🛒</button>
+            <button style="background:gray; margin-top:10px; width:100%; padding:10px; border:none; color:white; border-radius:5px;" onclick="goToStep(1)">પાછા જાવ</button>
+        </div>
+
     </div>
 
     <script>
-        // (પ્રોડક્ટ ડેટા અહીં પહેલા જેવો જ રહેશે - મેં ટૂંકાવીને લખ્યો છે)
         const products = [
-            { name: "બટાકા", price: 30, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=150" },
-            { name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cf?w=150" },
-            { name: "ટામેટા", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=150" }
-            // બાકીની પ્રોડક્ટ અહીં ઉમેરો...
+            { id: 0, name: "બટાકા", price: 30 },
+            { id: 1, name: "ડુંગળી", price: 40 },
+            { id: 2, name: "ટામેટા", price: 40 }
         ];
 
         let cart = {};
 
-        function render() {
-            const container = document.getElementById('items');
-            container.innerHTML = '';
-            let query = document.getElementById('searchInput').value.toLowerCase();
-
-            products.forEach((p, i) => {
-                if(query && !p.name.toLowerCase().includes(query)) return;
-                const qty = cart[i] || 0;
-                container.innerHTML += `
+        // પ્રોડક્ટ લિસ્ટ બતાવવા
+        function loadProducts() {
+            const list = document.getElementById('product-list');
+            products.forEach(p => {
+                list.innerHTML += `
                     <div class="item">
-                        <div style="display:flex; align-items:center; gap:10px;">
-                            <img src="${p.img}" class="item-img">
-                            <div class="item-info"><h3>${p.name}</h3><p>₹${p.price} / ${p.unit}</p></div>
-                        </div>
-                        <div class="btn-box">
-                            <button class="btn" onclick="update(${i}, -1)">-</button>
-                            <span class="qty">${qty}</span>
-                            <button class="btn" onclick="update(${i}, 1)">+</button>
+                        <span>${p.name} - ₹${p.price}</span>
+                        <div>
+                            <button onclick="updateCart(${p.id}, -1)">-</button>
+                            <span id="qty-${p.id}">0</span>
+                            <button onclick="updateCart(${p.id}, 1)">+</button>
                         </div>
                     </div>`;
             });
-            calculateTotal();
         }
 
-        function calculateTotal() {
-            let total = 0;
-            products.forEach((p, i) => total += (cart[i] || 0) * p.price);
-            document.getElementById('total').innerText = total;
+        function updateCart(id, val) {
+            cart[id] = Math.max(0, (cart[id] || 0) + val);
+            document.getElementById(`qty-${id}`).innerText = cart[id];
         }
 
-        function update(i, c) {
-            cart[i] = Math.max(0, (cart[i] || 0) + c);
-            render();
-        }
-
-        function sendOrder() {
-            const name = document.getElementById('customerName').value;
-            const address = document.getElementById('customerAddress').value;
-
-            if(!name || !address) {
-                alert("કૃપા કરીને તમારું નામ અને સરનામું લખો!");
-                return;
+        function goToStep(step) {
+            // સ્ટેપ ૧ થી ૨ માં જતી વખતે ચેક કરો કે કંઈ ખરીદ્યું છે કે નહીં
+            if(step == 2) {
+                let hasItems = Object.values(cart).reduce((a, b) => a + b, 0);
+                if(hasItems == 0) { alert("કૃપા કરીને ઓછામાં ઓછી એક વસ્તુ પસંદ કરો!"); return; }
             }
 
-            let itemsList = "";
+            // સ્ટેપ ૨ થી ૩ માં જતી વખતે નામ-એડ્રેસ ચેક કરો
+            if(step == 3) {
+                if(!document.getElementById('custName').value || !document.getElementById('custAddress').value) {
+                    alert("નામ અને સરનામું લખવું જરૂરી છે!"); return;
+                }
+                showSummary();
+            }
+
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+        }
+
+        function showSummary() {
+            let summary = document.getElementById('orderSummary');
             let total = 0;
-            products.forEach((p, i) => {
-                if (cart[i] > 0) {
-                    itemsList += `*${p.name}*: ${cart[i]} × ₹${p.price}\n`;
-                    total += cart[i] * p.price;
+            let list = "<ul>";
+            products.forEach(p => {
+                if(cart[p.id] > 0) {
+                    list += `<li>${p.name}: ${cart[p.id]} કિલો</li>`;
+                    total += cart[p.id] * p.price;
                 }
             });
+            list += `</ul><p><strong>કુલ: ₹${total}</strong></p>`;
+            summary.innerHTML = list;
+        }
 
-            if(total === 0) {
-                alert("ઓર્ડર ખાલી છે!");
-                return;
-            }
-
-            let msg = `🛒 *નવો ઓર્ડર*\n\n👤 *નામ:* ${name}\n🏠 *સરનામું:* ${address}\n\n📋 *ઓર્ડરની વિગત:*\n${itemsList}\n💰 *કુલ રકમ: ₹${total}*`;
+        function sendWhatsApp() {
+            let name = document.getElementById('custName').value;
+            let addr = document.getElementById('custAddress').value;
+            let msg = `🛒 ઓર્ડર:\nનામ: ${name}\nસરનામું: ${addr}\n\n`;
+            // ... (અહીં મેસેજ ફોર્મેટિંગ કરો)
             window.open(`https://wa.me/919428707543?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
-        render();
+        loadProducts();
     </script>
 </body>
 </html>
