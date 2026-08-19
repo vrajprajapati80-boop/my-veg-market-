@@ -5,28 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>તાજી માર્કેટ</title>
     <style>
-        body { font-family: sans-serif; margin: 0; background: #f9f9f9; padding-bottom: 250px; }
-        header { background: #1b5e20; color: white; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; }
-        .search-box { width: 90%; max-width: 400px; padding: 10px; border-radius: 20px; border: none; margin-top: 10px; outline: none; }
-        .container { padding: 10px; max-width: 500px; margin: auto; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #f4f6f4; padding-bottom: 250px; }
+        header { background: #1b5e20; color: white; text-align: center; padding: 15px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        header h1 { margin: 0; font-size: 22px; }
+        .search-box { width: 90%; max-width: 400px; padding: 10px 15px; border-radius: 20px; border: none; margin-top: 10px; outline: none; font-size: 14px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); }
+        .container { padding: 12px; max-width: 500px; margin: auto; }
         
-        .section-title { font-size: 18px; color: #1b5e20; margin: 20px 0 10px; font-weight: bold; border-bottom: 2px solid #2e7d32; padding-bottom: 5px; }
-        .item { background: white; padding: 10px; margin-bottom: 8px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .section-title { font-size: 17px; color: #1b5e20; margin: 20px 0 10px; font-weight: bold; border-bottom: 2px solid #2e7d32; padding-bottom: 4px; }
+        .item { background: white; padding: 12px; margin-bottom: 10px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
         .item-left { display: flex; align-items: center; gap: 12px; }
         
-        /* ફોટા માટે ખાસ ફિક્સ */
-        .img-box { width: 60px; height: 60px; background-color: #e8f5e9; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #c8e6c9; }
-        .item-img { width: 100%; height: 100%; object-fit: cover; }
+        .img-box { width: 60px; height: 60px; background: #f0f7f0; border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 5px; box-sizing: border-box; border: 1px solid #e0eee0; }
+        .item-img { width: 100%; height: 100%; object-fit: contain; }
         
-        .item-info h3 { margin: 0; font-size: 16px; color: #333; }
-        .item-info p { margin: 2px 0; font-size: 13px; color: #666; }
+        .item-info h3 { margin: 0; font-size: 16px; color: #222; }
+        .item-info p { margin: 3px 0 0; font-size: 13px; color: #666; font-weight: 500; }
         
         .btn-box { display: flex; align-items: center; gap: 10px; }
-        .btn { background: #2e7d32; color: white; border: none; width: 35px; height: 35px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; }
+        .btn { background: #2e7d32; color: white; border: none; width: 34px; height: 34px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+        .qty-count { font-size: 15px; font-weight: bold; min-width: 18px; text-align: center; }
         
-        .checkout-box { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: white; padding: 15px; border-top: 3px solid #25D366; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); box-sizing: border-box; }
-        .input-field { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        .order-btn { background: #25D366; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .checkout-box { position: fixed; bottom: 0; width: 100%; max-width: 500px; left: 50%; transform: translateX(-50%); background: white; padding: 15px; border-top: 3px solid #25D366; box-shadow: 0 -4px 15px rgba(0,0,0,0.1); box-sizing: border-box; border-radius: 16px 16px 0 0; }
+        .total-text { margin-bottom: 10px; font-size: 16px; color: #333; }
+        .input-field { width: 100%; padding: 10px 12px; margin-bottom: 8px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 14px; outline: none; }
+        .input-field:focus { border-color: #2e7d32; }
+        .order-btn { background: #25D366; color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
     </style>
 </head>
 <body>
@@ -39,26 +42,32 @@
     <div class="container" id="items"></div>
 
     <div class="checkout-box">
-        <div style="margin-bottom: 10px;">કુલ ચૂકવવાપાત્ર: <strong>₹<span id="total">0</span></strong></div>
+        <div class="total-text">કુલ ચૂકવવાપાત્ર: <strong>₹<span id="total">0</span></strong></div>
         <input type="text" id="custName" class="input-field" placeholder="તમારું નામ">
         <input type="text" id="custAddr" class="input-field" placeholder="તમારું સરનામું">
         <button class="order-btn" onclick="sendOrder()">ઓર્ડર WhatsApp પર મોકલો 🛒</button>
     </div>
 
     <script>
-        // સ્ટેબલ વિકિમીડિયા લિંક્સ
+        // કોઈ પણ ઈન્ટરનેટ લિંક વગર કોડની અંદર જ 100% ચાલે તેવા ફોટા (Direct SVG Vector Images)
         const products = [
-            { cat: "શાકભાજી", name: "બટાકા", price: 30, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/200px-Patates.jpg" },
-            { cat: "શાકભાજી", name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Onion_on_white.JPG/200px-Onion_on_white.JPG" },
-            { cat: "શાકભાજી", name: "ટામેટા", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Bright_red_tomato.jpg/200px-Bright_red_tomato.jpg" },
-            { cat: "શાકભાજી", name: "રીંગણ", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Eggplant_on_white.jpg/200px-Eggplant_on_white.jpg" },
-            { cat: "શાકભાજી", name: "ભીંડા", price: 60, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Okra_pods.jpg/200px-Okra_pods.jpg" },
-            { cat: "શાકભાજી", name: "દૂધી", price: 30, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Lagenaria_siceraria_2.jpg/200px-Lagenaria_siceraria_2.jpg" },
-            { cat: "લીલા મસાલા", name: "આદુ", price: 100, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ginger_root.jpg/200px-Ginger_root.jpg" },
-            { cat: "લીલા મસાલા", name: "લીલા મરચાં", price: 80, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Green_chili_pepper.jpg/200px-Green_chili_pepper.jpg" },
-            { cat: "ફળો", name: "કેળા", price: 50, unit: "1 ડઝન", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/200px-Banana-Single.jpg" },
-            { cat: "ફળો", name: "સફરજન", price: 150, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/200px-Red_Apple.jpg" },
-            { cat: "ફળો", name: "કેરી", price: 150, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Mango_Fruit.jpg/200px-Mango_Fruit.jpg" }
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "બટાકા", price: 30, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><ellipse cx='50' cy='50' rx='40' ry='30' fill='%23c8965d'/><circle cx='35' cy='45' r='3' fill='%23a0703f'/><circle cx='55' cy='55' r='4' fill='%23a0703f'/><circle cx='65' cy='40' r='2' fill='%23a0703f'/></svg>" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 10 C30 30 15 50 15 70 C15 85 30 95 50 95 C70 95 85 85 85 70 C85 50 70 30 50 10 Z' fill='%23b05279'/><path d='M50 10 L50 95' stroke='%238a385b' stroke-width='2'/></svg>" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ટામેટા", price: 40, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='55' r='38' fill='%23e53935'/><path d='M50 10 Q40 25 30 20 Q45 28 50 28 Q55 28 70 20 Q60 25 50 10 Z' fill='%2343a047'/></svg>" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "રીંગણ", price: 40, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M45 25 C25 35 25 75 40 90 C55 100 80 85 75 60 C70 40 55 20 45 25 Z' fill='%235e35b1'/><path d='M45 25 C40 15 50 10 50 10 C50 10 55 20 60 20 Z' fill='%2343a047'/></svg>" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ભીંડા", price: 60, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M20 20 L35 15 L80 75 C85 82 78 88 70 85 L20 20 Z' fill='%2343a047'/><path d='M20 20 L15 12 L28 10 Z' fill='%232e7d32'/></svg>" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "દૂધી", price: 30, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 10 C42 10 42 35 35 55 C28 75 35 90 50 90 C65 90 72 75 65 55 C58 35 58 10 50 10 Z' fill='%2381c784'/><path d='M50 10 L50 2' stroke='%23388e3c' stroke-width='3'/></svg>" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "કોબીજ", price: 30, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='38' fill='%2366bb6a'/><circle cx='50' cy='50' r='28' fill='%2381c784'/><circle cx='50' cy='50' r='18' fill='%23a5d6a7'/></svg>" },
+            { cat: "🌿 લીલા મસાલા", name: "આદુ", price: 100, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M20 50 C20 35 40 35 45 45 C50 30 70 30 75 45 C85 45 90 60 75 75 C60 85 30 85 20 50 Z' fill='%23bcaaa4'/></svg>" },
+            { cat: "🌿 લીલા મસાલા", name: "લીલા મરચાં", price: 80, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M20 25 C40 25 75 45 70 85 C68 85 60 60 20 25 Z' fill='%232e7d32'/><path d='M15 20 L22 27' stroke='%231b5e20' stroke-width='4'/></svg>" },
+            { cat: "🌿 લીલા મસાલા", name: "લીંબુ", price: 100, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><ellipse cx='50' cy='50' rx='38' ry='28' fill='%23fdd835' transform='rotate(-15 50 50)'/></svg>" },
+            { cat: "🌿 લીલા મસાલા", name: "કોથમીર", price: 20, unit: "1 જોડી", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 90 L50 40' stroke='%23388e3c' stroke-width='3'/><circle cx='35' cy='30' r='12' fill='%234caf50'/><circle cx='65' cy='30' r='12' fill='%234caf50'/><circle cx='50' cy='20' r='15' fill='%234caf50'/></svg>" },
+            { cat: "🍎 તાજા ફળો", name: "કેળા", price: 50, unit: "1 ડઝન", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M20 25 C40 25 80 45 75 80 C60 70 30 45 20 25 Z' fill='%23ffee58'/><path d='M75 80 L80 85' stroke='%23fbc02d' stroke-width='3'/></svg>" },
+            { cat: "🍎 તાજા ફળો", name: "સફરજન", price: 150, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M30 30 C15 45 20 85 50 85 C80 85 85 45 70 30 C60 20 55 30 50 30 C45 30 40 20 30 30 Z' fill='%23d32f2f'/><path d='M50 28 Q55 15 60 10' stroke='%235d4037' stroke-width='3' fill='none'/></svg>" },
+            { cat: "🍎 તાજા ફળો", name: "કેરી", price: 150, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 15 C30 15 20 40 25 65 C30 85 60 90 75 75 C85 60 80 30 50 15 Z' fill='%23ffa726'/><path d='M50 15 Q52 5 50 2' stroke='%23388e3c' stroke-width='3'/></svg>" },
+            { cat: "🍎 તાજા ફળો", name: "દાડમ", price: 120, unit: "1 કિલો", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='55' r='35' fill='%23c62828'/><path d='M45 20 L50 10 L55 20 Z' fill='%23c62828'/></svg>" },
+            { cat: "🍎 તાજા ફળો", name: "તરબૂચ", price: 60, unit: "1 નંગ", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M10 30 A40 40 0 0 0 90 30 Z' fill='%23e53935'/><path d='M8 30 A42 42 0 0 0 92 30' stroke='%232e7d32' stroke-width='6' fill='none'/><circle cx='40' cy='45' r='2' fill='%23000'/><circle cx='60' cy='45' r='2' fill='%23000'/><circle cx='50' cy='55' r='2' fill='%23000'/></svg>" },
+            { cat: "🍎 તાજા ફળો", name: "અનાનસ", price: 70, unit: "1 નંગ", img: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><ellipse cx='50' cy='60' rx='25' ry='30' fill='%23f57c00'/><path d='M50 30 L40 10 L50 20 L60 10 Z' fill='%23388e3c'/></svg>" }
         ];
 
         let cart = {};
@@ -84,11 +93,14 @@
                             <div class="img-box">
                                 <img src="${p.img}" class="item-img" alt="${p.name}">
                             </div>
-                            <div class="item-info"><h3>${p.name}</h3><p>₹${p.price} / ${p.unit}</p></div>
+                            <div class="item-info">
+                                <h3>${p.name}</h3>
+                                <p>₹${p.price} / ${p.unit}</p>
+                            </div>
                         </div>
                         <div class="btn-box">
                             <button class="btn" onclick="update(${i}, -1)">-</button>
-                            <span>${qty}</span>
+                            <span class="qty-count">${qty}</span>
                             <button class="btn" onclick="update(${i}, 1)">+</button>
                         </div>
                     </div>`;
@@ -124,10 +136,11 @@
             if(total === 0) { alert("કંઈ સિલેક્ટ કર્યું નથી!"); return; }
 
             let msg = `🛒 *નવો ઓર્ડર*\n\n👤 *નામ:* ${name}\n🏠 *સરનામું:* ${addr}\n\n📋 *વિગત:*\n${items}\n💰 *કુલ: ₹${total}*`;
-            window.open(`https://wa.me/9196237985?text=${encodeURIComponent(msg)}`, '_blank');
+            window.open(`https://wa.me/919428707543?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         render();
     </script>
 </body>
 </html>
+
