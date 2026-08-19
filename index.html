@@ -15,7 +15,7 @@
         .item { background: white; padding: 12px; margin-bottom: 10px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
         .item-left { display: flex; align-items: center; gap: 12px; }
         
-        .img-box { width: 60px; height: 60px; background: #f0f7f0; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #e0eee0; }
+        .img-box { width: 60px; height: 60px; background: #e8f5e9; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #c8e6c9; flex-shrink: 0; }
         .item-img { width: 100%; height: 100%; object-fit: cover; }
         
         .item-info h3 { margin: 0; font-size: 16px; color: #222; }
@@ -48,22 +48,22 @@
     </div>
 
     <script>
-        // રિયલ ફોટા સાથેની યાદી
+        // 100% Hotlink-friendly High-Quality Direct Real Images
         const products = [
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "બટાકા", price: 30, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/300px-Patates.jpg" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Onion_on_white.JPG/300px-Onion_on_white.JPG" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "ટામેટા", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Bright_red_tomato.jpg/300px-Bright_red_tomato.jpg" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "રીંગણ", price: 40, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Eggplant_on_white.jpg/300px-Eggplant_on_white.jpg" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "ભીંડા", price: 60, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Okra_pods.jpg/300px-Okra_pods.jpg" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "દૂધી", price: 30, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Lagenaria_siceraria_2.jpg/300px-Lagenaria_siceraria_2.jpg" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "કોબીજ", price: 30, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Cabbage_white_background.jpg/300px-Cabbage_white_background.jpg" },
-            { cat: "🌿 લીલા મસાલા", name: "આદુ", price: 100, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ginger_root.jpg/300px-Ginger_root.jpg" },
-            { cat: "🌿 લીલા મસાલા", name: "લીલા મરચાં", price: 80, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Green_chili_pepper.jpg/300px-Green_chili_pepper.jpg" },
-            { cat: "🌿 લીલા મસાલા", name: "લીંબુ", price: 100, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Lemon.jpg/300px-Lemon.jpg" },
-            { cat: "🌿 લીલા મસાલા", name: "કોથમીર", price: 20, unit: "1 જોડી", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Coriandrum_sativum_1.jpg/300px-Coriandrum_sativum_1.jpg" },
-            { cat: "🍎 તાજા ફળો", name: "કેળા", price: 50, unit: "1 ડઝન", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/300px-Banana-Single.jpg" },
-            { cat: "🍎 તાજા ફળો", name: "સફરજન", price: 150, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Red_Apple.jpg/300px-Red_Apple.jpg" },
-            { cat: "🍎 તાજા ફળો", name: "કેરી", price: 150, unit: "1 કિલો", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Mango_Fruit.jpg/300px-Mango_Fruit.jpg" }
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "બટાકા", price: 30, unit: "1 કિલો", img: "https://images.pexels.com/photos/144248/potatoes-vegetables-market-fresh-144248.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "https://images.pexels.com/photos/533342/pexels-photo-533342.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ટામેટા", price: 40, unit: "1 કિલો", img: "https://images.pexels.com/photos/53328/tomato-red-fresh-vegetable-53328.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "રીંગણ", price: 40, unit: "1 કિલો", img: "https://images.pexels.com/photos/321551/pexels-photo-321551.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ભીંડા", price: 60, unit: "1 કિલો", img: "https://images.pexels.com/photos/2583187/pexels-photo-2583187.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "દૂધી", price: 30, unit: "1 કિલો", img: "https://images.pexels.com/photos/128420/pexels-photo-128420.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "કોબીજ", price: 30, unit: "1 કિલો", img: "https://images.pexels.com/photos/2572528/pexels-photo-2572528.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🌿 લીલા મસાલા", name: "આદુ", price: 100, unit: "1 કિલો", img: "https://images.pexels.com/photos/161556/ginger-plant-spices-cook-161556.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🌿 લીલા મસાલા", name: "લીલા મરચાં", price: 80, unit: "1 કિલો", img: "https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🌿 લીલા મસાલા", name: "લીંબુ", price: 100, unit: "1 કિલો", img: "https://images.pexels.com/photos/1414110/pexels-photo-1414110.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🌿 લીલા મસાલા", name: "કોથમીર", price: 20, unit: "1 જોડી", img: "https://images.pexels.com/photos/4198139/pexels-photo-4198139.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🍎 તાજા ફળો", name: "કેળા", price: 50, unit: "1 ડઝન", img: "https://images.pexels.com/photos/1093038/pexels-photo-1093038.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🍎 તાજા ફળો", name: "સફરજન", price: 150, unit: "1 કિલો", img: "https://images.pexels.com/photos/102104/pexels-photo-102104.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { cat: "🍎 તાજા ફળો", name: "કેરી", price: 150, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=300" }
         ];
 
         let cart = {};
@@ -87,7 +87,7 @@
                     <div class="item">
                         <div class="item-left">
                             <div class="img-box">
-                                <img src="${p.img}" class="item-img" alt="${p.name}">
+                                <img src="${p.img}" class="item-img" alt="${p.name}" referrerpolicy="no-referrer" loading="lazy">
                             </div>
                             <div class="item-info">
                                 <h3>${p.name}</h3>
