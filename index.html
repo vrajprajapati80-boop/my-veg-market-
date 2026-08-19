@@ -15,7 +15,7 @@
         .item { background: white; padding: 12px; margin-bottom: 10px; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
         .item-left { display: flex; align-items: center; gap: 12px; }
         
-        .img-box { width: 60px; height: 60px; background: #f0f7f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #c8e6c9; flex-shrink: 0; }
+        .img-box { width: 65px; height: 65px; background: #f0f7f0; border-radius: 12px; overflow: hidden; border: 1px solid #c8e6c9; flex-shrink: 0; }
         .item-img { width: 100%; height: 100%; object-fit: cover; }
         
         .item-info h3 { margin: 0; font-size: 16px; color: #222; }
@@ -48,19 +48,22 @@
     </div>
 
     <script>
-        // ઝીરો ઇન્ટરનેટ ઇરેર - સેલ્ફ કન્ટેઇન્ડ ઇમેજ ડેટા
+        // HD Real Photos with Auto-Fallback Security
         const products = [
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "બટાકા", price: 30, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fef3e2'/%3E%3Cellipse cx='50' cy='50' rx='36' ry='28' fill='%23c8965d'/%3E%3Ccircle cx='35' cy='45' r='3' fill='%23a0703f'/%3E%3Ccircle cx='58' cy='55' r='4' fill='%23a0703f'/%3E%3Ccircle cx='65' cy='40' r='2' fill='%23a0703f'/%3E%3C/svg%3E" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fce4ec'/%3E%3Cpath d='M50 12 C30 32 15 52 15 72 C15 87 30 95 50 95 C70 95 85 87 85 72 C85 52 70 32 50 12 Z' fill='%23b05279'/%3E%3Cpath d='M50 12 L50 95' stroke='%238a385b' stroke-width='2'/%3E%3C/svg%3E" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "ટામેટા", price: 40, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffebee'/%3E%3Ccircle cx='50' cy='55' r='36' fill='%23e53935'/%3E%3Cpath d='M50 10 Q40 25 30 20 Q45 28 50 28 Q55 28 70 20 Q60 25 50 10 Z' fill='%2343a047'/%3E%3C/svg%3E" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "રીંગણ", price: 40, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3e5f5'/%3E%3Cpath d='M45 25 C25 35 25 75 40 90 C55 100 80 85 75 60 C70 40 55 20 45 25 Z' fill='%235e35b1'/%3E%3Cpath d='M45 25 C40 15 50 10 50 10 C50 10 55 20 60 20 Z' fill='%2343a047'/%3E%3C/svg%3E" },
-            { cat: "🥦 મુખ્ય શાકભાજી", name: "ભીંડા", price: 60, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23e8f5e9'/%3E%3Cpath d='M20 20 L35 15 L80 75 C85 82 78 88 70 85 L20 20 Z' fill='%2343a047'/%3E%3Cpath d='M20 20 L15 12 L28 10 Z' fill='%232e7d32'/%3E%3C/svg%3E" },
-            { cat: "🌿 લીલા મસાલા", name: "આદુ", price: 100, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23efebe9'/%3E%3Cpath d='M20 50 C20 35 40 35 45 45 C50 30 70 30 75 45 C85 45 90 60 75 75 C60 85 30 85 20 50 Z' fill='%23bcaaa4'/%3E%3C/svg%3E" },
-            { cat: "🌿 લીલા મસાલા", name: "લીલા મરચાં", price: 80, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23e8f5e9'/%3E%3Cpath d='M20 25 C40 25 75 45 70 85 C68 85 60 60 20 25 Z' fill='%232e7d32'/%3E%3Cpath d='M15 20 L22 27' stroke='%231b5e20' stroke-width='4'/%3E%3C/svg%3E" },
-            { cat: "🌿 લીલા મસાલા", name: "લીંબુ", price: 100, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fffde7'/%3E%3Cellipse cx='50' cy='50' rx='38' ry='28' fill='%23fdd835' transform='rotate(-15 50 50)'/%3E%3C/svg%3E" },
-            { cat: "🍎 તાજા ફળો", name: "કેળા", price: 50, unit: "1 ડઝન", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fffde7'/%3E%3Cpath d='M20 25 C40 25 80 45 75 80 C60 70 30 45 20 25 Z' fill='%23ffee58'/%3E%3Cpath d='M75 80 L80 85' stroke='%23fbc02d' stroke-width='3'/%3E%3C/svg%3E" },
-            { cat: "🍎 તાજા ફળો", name: "સફરજન", price: 150, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffebee'/%3E%3Cpath d='M30 30 C15 45 20 85 50 85 C80 85 85 45 70 30 C60 20 55 30 50 30 C45 30 40 20 30 30 Z' fill='%23d32f2f'/%3E%3Cpath d='M50 28 Q55 15 60 10' stroke='%235d4037' stroke-width='3' fill='none'/%3E%3C/svg%3E" },
-            { cat: "🍎 તાજા ફળો", name: "કેરી", price: 150, unit: "1 કિલો", img: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fff3e0'/%3E%3Cpath d='M50 15 C30 15 20 40 25 65 C30 85 60 90 75 75 C85 60 80 30 50 15 Z' fill='%23ffa726'/%3E%3Cpath d='M50 15 Q52 5 50 2' stroke='%23388e3c' stroke-width='3'/%3E%3C/svg%3E" }
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "બટાકા", price: 30, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ડુંગળી", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ટામેટા", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "રીંગણ", price: 40, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "ભીંડા", price: 60, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1425543103986-22bad73d385a?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "દૂધી", price: 30, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🥦 મુખ્ય શાકભાજી", name: "કોબીજ", price: 30, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🌿 લીલા મસાલા", name: "આદુ", price: 100, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🌿 લીલા મસાલા", name: "લીલા મરચાં", price: 80, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🌿 લીલા મસાલા", name: "લીંબુ", price: 100, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1534531141161-e4ecc288921e?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🌿 લીલા મસાલા", name: "કોથમીર", price: 20, unit: "1 જોડી", img: "https://images.unsplash.com/photo-1588879460618-9249e7d947d1?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🍎 તાજા ફળો", name: "કેળા", price: 50, unit: "1 ડઝન", img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🍎 તાજા ફળો", name: "સફરજન", price: 150, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=200&auto=format&fit=crop&q=80" },
+            { cat: "🍎 તાજા ફળો", name: "કેરી", price: 150, unit: "1 કિલો", img: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=200&auto=format&fit=crop&q=80" }
         ];
 
         let cart = {};
@@ -84,7 +87,7 @@
                     <div class="item">
                         <div class="item-left">
                             <div class="img-box">
-                                <img src="${p.img}" class="item-img" alt="${p.name}">
+                                <img src="${p.img}" class="item-img" alt="${p.name}" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23e8f5e9\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'30\'%3E🥦%3C/text%3E%3C/svg%3E';">
                             </div>
                             <div class="item-info">
                                 <h3>${p.name}</h3>
